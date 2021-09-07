@@ -17,7 +17,6 @@ lista = [p]
 def raiz():
     return 'Ola mundo'
 
-
 @app.route('/doctor')
 def doc():
     return render_template('doctor.html', titulo='Pacientes', patients=lista)
