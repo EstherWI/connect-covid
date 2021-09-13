@@ -2,9 +2,11 @@ tables = {
     'patients': [
         {
             'cpf': 0,
+            'nome' :'',
             'temp': 36.0,
             'freq': '',
-            'pressao': '',
+            'pressao1': '',
+            'pressao2': '',
             'resp': ''
         },
     ]
@@ -30,7 +32,8 @@ class DataPatient():
         if index!=-1:
             table[index]['temp'] = data['temp']
             table[index]['freq'] = data['freq']
-            table[index]['pressao'] = data['pressao']
+            table[index]['pressao1'] = data['pressao1']
+            table[index]['pressao2'] = data['pressao2']
             table[index]['resp'] = data['resp']
             return True
         else:

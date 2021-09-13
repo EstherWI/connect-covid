@@ -1,28 +1,12 @@
 from models.tables import DataPatient
-from flask import Flask, json, render_template, request, redirect, url_for, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-
-class Paciente:
-    def __init__(self, cpf, temp, freq, pressao, resp):
-        self.cpf = cpf
-        self.temp = temp
-        self.freq = freq
-        self.pressao = pressao
-        self.resp = resp
-
-p = Paciente(1,1,1,1,1)
-lista = [p]
-
 dbPatients = DataPatient()
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def raiz():
-    return "Hello world"
-
-@app.route('/doctor')
-def doc():
-    return render_template('doctor.html', titulo='Pacientes', patients=lista)
+    return jsonify({'status': 'Sucess'}), 200
 
 @app.route('/patients', methods=['GET'])
 def getAll():
