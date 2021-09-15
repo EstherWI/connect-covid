@@ -314,10 +314,10 @@ background-color: rgb(255, 251, 202);</string>
    <widget class="QLabel" name="label_nomePaciente">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>340</y>
+      <x>160</x>
+      <y>330</y>
       <width>251</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -328,7 +328,7 @@ background-color: rgb(255, 251, 202);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(85, 0, 127);</string>
     </property>
     <property name="text">
      <string/>

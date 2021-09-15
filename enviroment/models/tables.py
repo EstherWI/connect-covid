@@ -1,14 +1,6 @@
 tables = {
     'patients': [
-        {
-            'cpf': 0,
-            'nome' :'',
-            'temp': 36.0,
-            'freq': '',
-            'pressao1': '',
-            'pressao2': '',
-            'resp': ''
-        },
+
     ]
 }
 

@@ -14,7 +14,7 @@ import time
 
 
 class Ui_MainWindow(object):
-    ngrok = 'http://5de3-170-0-71-179.ngrok.io'
+    ngrok = 'http://f7d4-170-0-71-179.ngrok.io'
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Connect")
@@ -97,10 +97,10 @@ class Ui_MainWindow(object):
 
     def login(self):
         try:
-            r = requests.post(
-                url=f'{self.ngrok}/patient', json=self.create_json())
-            print(r)
+            requests.post(url=f'{self.ngrok}/patient', json=self.create_json())
+            paciente = self.getPaciente()
             self.telaDados = uic.loadUi('paciente.ui')
+            self.telaDados.label_nomePaciente.setText(paciente['nome'])
             self.telaDados.show()
             self.telaDados.botao.clicked.connect(self.atualizaPaciente)
 
@@ -111,6 +111,10 @@ class Ui_MainWindow(object):
         r = requests.put(
             url=f'{self.ngrok}/patient/{int(self.lineEdit_CPF.text())}', json=self.update_json())
         print(r)
+
+    def getPaciente(self)->dict:
+        rq = requests.get(url=f'{self.ngrok}/patient/{int(self.lineEdit_CPF.text())}')
+        return rq.json()
 
 
 if __name__ == "__main__":

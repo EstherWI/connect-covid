@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("Paciente")
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(543, 442)
         MainWindow.setStyleSheet("\n"
 "background-color: rgb(85, 0, 127);")
@@ -128,13 +128,13 @@ class Ui_MainWindow(object):
         self.label_3.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_3.setObjectName("label_3")
         self.label_nomePaciente = QtWidgets.QLabel(self.centralwidget)
-        self.label_nomePaciente.setGeometry(QtCore.QRect(170, 340, 251, 16))
+        self.label_nomePaciente.setGeometry(QtCore.QRect(160, 330, 251, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.label_nomePaciente.setFont(font)
-        self.label_nomePaciente.setStyleSheet("color: rgb(255, 255, 255);")
+        self.label_nomePaciente.setStyleSheet("background-color: rgb(85, 0, 127);")
         self.label_nomePaciente.setText("")
         self.label_nomePaciente.setObjectName("label_nomePaciente")
         self.label_sinaisVitais = QtWidgets.QLabel(self.centralwidget)
@@ -159,10 +159,9 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("Paciente", "Paciente"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.botao.setText(_translate("MainWindow", "Conectar"))
         self.label.setText(_translate("MainWindow", "Paciente Conectado:"))
         self.label_2.setText(_translate("MainWindow", "Situaçãos sinais vitais:"))
@@ -172,8 +171,6 @@ class Ui_MainWindow(object):
         self.label_press.setText(_translate("MainWindow", "Pressão Arterial (mmHg)"))
         self.label_titulo.setText(_translate("MainWindow", "Connect Covid"))
         self.label_3.setText(_translate("MainWindow", "x"))
-    
-    
 
 
 if __name__ == "__main__":

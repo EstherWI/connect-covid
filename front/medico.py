@@ -9,6 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import requests
+
+ngrok = 'http://f7d4-170-0-71-179.ngrok.io'
 
 
 class Ui_MainWindow(object):
@@ -30,52 +33,40 @@ class Ui_MainWindow(object):
         self.listWidget_pacientes = QtWidgets.QListWidget(self.centralwidget)
         self.listWidget_pacientes.setGeometry(QtCore.QRect(10, 40, 201, 331))
         self.listWidget_pacientes.setObjectName("listWidget_pacientes")
-        item = QtWidgets.QListWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        item.setFont(font)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        item.setBackground(brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        item.setForeground(brush)
-        self.listWidget_pacientes.addItem(item)
         self.label_temperatura = QtWidgets.QLabel(self.centralwidget)
         self.label_temperatura.setGeometry(QtCore.QRect(250, 70, 121, 91))
         self.label_temperatura.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                             "background-color: rgb(0, 0, 127);")
         self.label_temperatura.setText("")
         self.label_temperatura.setObjectName("label_temperatura")
         self.label_frequencia = QtWidgets.QLabel(self.centralwidget)
         self.label_frequencia.setGeometry(QtCore.QRect(250, 200, 121, 91))
         self.label_frequencia.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                            "background-color: rgb(0, 0, 127);")
         self.label_frequencia.setText("")
         self.label_frequencia.setObjectName("label_frequencia")
         self.label_pressao = QtWidgets.QLabel(self.centralwidget)
         self.label_pressao.setGeometry(QtCore.QRect(430, 70, 121, 91))
         self.label_pressao.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                         "background-color: rgb(0, 0, 127);")
         self.label_pressao.setText("")
         self.label_pressao.setObjectName("label_pressao")
         self.label_saturacao = QtWidgets.QLabel(self.centralwidget)
         self.label_saturacao.setGeometry(QtCore.QRect(430, 200, 121, 91))
         self.label_saturacao.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                           "background-color: rgb(0, 0, 127);")
         self.label_saturacao.setText("")
         self.label_saturacao.setObjectName("label_saturacao")
         self.label_titulo_temperatura = QtWidgets.QLabel(self.centralwidget)
-        self.label_titulo_temperatura.setGeometry(QtCore.QRect(270, 70, 81, 16))
+        self.label_titulo_temperatura.setGeometry(
+            QtCore.QRect(270, 70, 81, 16))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_titulo_temperatura.setFont(font)
         self.label_titulo_temperatura.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                                    "background-color: rgb(0, 0, 127);")
         self.label_titulo_temperatura.setObjectName("label_titulo_temperatura")
         self.label_titulo_pressao = QtWidgets.QLabel(self.centralwidget)
         self.label_titulo_pressao.setGeometry(QtCore.QRect(470, 70, 47, 13))
@@ -85,7 +76,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_titulo_pressao.setFont(font)
         self.label_titulo_pressao.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                                "background-color: rgb(0, 0, 127);")
         self.label_titulo_pressao.setObjectName("label_titulo_pressao")
         self.label_titulo_freq = QtWidgets.QLabel(self.centralwidget)
         self.label_titulo_freq.setGeometry(QtCore.QRect(280, 200, 71, 20))
@@ -95,7 +86,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_titulo_freq.setFont(font)
         self.label_titulo_freq.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                             "background-color: rgb(0, 0, 127);")
         self.label_titulo_freq.setObjectName("label_titulo_freq")
         self.label_titulo_saturacao = QtWidgets.QLabel(self.centralwidget)
         self.label_titulo_saturacao.setGeometry(QtCore.QRect(460, 200, 61, 16))
@@ -105,22 +96,24 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_titulo_saturacao.setFont(font)
         self.label_titulo_saturacao.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
+                                                  "background-color: rgb(0, 0, 127);")
         self.label_titulo_saturacao.setObjectName("label_titulo_saturacao")
         self.label_titulo_temperatura_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_titulo_temperatura_2.setGeometry(QtCore.QRect(250, 320, 61, 16))
+        self.label_titulo_temperatura_2.setGeometry(
+            QtCore.QRect(250, 320, 61, 16))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_titulo_temperatura_2.setFont(font)
         self.label_titulo_temperatura_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(0, 0, 127);")
-        self.label_titulo_temperatura_2.setObjectName("label_titulo_temperatura_2")
+                                                      "background-color: rgb(0, 0, 127);")
+        self.label_titulo_temperatura_2.setObjectName(
+            "label_titulo_temperatura_2")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(310, 320, 41, 16))
         self.lineEdit.setStyleSheet("background-color: rgb(0, 0, 127);\n"
-"color: rgb(255, 255, 255);")
+                                    "color: rgb(255, 255, 255);")
         self.lineEdit.setObjectName("lineEdit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -130,9 +123,16 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.listWidget_pacientes.itemClicked.connect(self.listwidgetclicked)
+
+    def listwidgetclicked(self, item):
+        index = self.listWidget_pacientes.row(item)
+        self.label_frequencia.setText(str(self.rq[index]['freq']))
+        self.label_pressao.setText(str(self.rq[index]['pressao1']) + 'x' + str(self.rq[index]['pressao2']))
+        self.label_saturacao.setText(str(self.rq[index]['resp']))
+        self.label_temperatura.setText(str(self.rq[index]['temp']))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -140,14 +140,34 @@ class Ui_MainWindow(object):
         self.label_titulo.setText(_translate("MainWindow", "Connect Covid"))
         __sortingEnabled = self.listWidget_pacientes.isSortingEnabled()
         self.listWidget_pacientes.setSortingEnabled(False)
-        item = self.listWidget_pacientes.item(0)
-        item.setText(_translate("MainWindow", "Pacientes:"))
         self.listWidget_pacientes.setSortingEnabled(__sortingEnabled)
-        self.label_titulo_temperatura.setText(_translate("MainWindow", "Temperatura"))
+        self.label_titulo_temperatura.setText(
+            _translate("MainWindow", "Temperatura"))
         self.label_titulo_pressao.setText(_translate("MainWindow", "Pressão"))
         self.label_titulo_freq.setText(_translate("MainWindow", "Frequencia"))
-        self.label_titulo_saturacao.setText(_translate("MainWindow", "Saturação"))
-        self.label_titulo_temperatura_2.setText(_translate("MainWindow", "Situação"))
+        self.label_titulo_saturacao.setText(
+            _translate("MainWindow", "Saturação"))
+        self.label_titulo_temperatura_2.setText(
+            _translate("MainWindow", "Situação"))
+        for p in range(len(self.rq)):
+            item = QtWidgets.QListWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            font.setBold(True)
+            font.setWeight(75)
+            item.setFont(font)
+            brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+            brush.setStyle(QtCore.Qt.NoBrush)
+            item.setBackground(brush)
+            brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+            brush.setStyle(QtCore.Qt.NoBrush)
+            item.setForeground(brush)
+            item.setText(_translate("MainWindow", self.rq[p]['nome']))
+            self.listWidget_pacientes.addItem(item)
+                   
+    def listar_pacientes(self):
+        self.rq = requests.get(url=f'{ngrok}/patients').json()
+        
 
 
 if __name__ == "__main__":
@@ -155,6 +175,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
+    ui.listar_pacientes()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
