@@ -11,10 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 import requests
 import time
+from operator import attrgetter
 
 
 class Ui_MainWindow(object):
-    ngrok = 'http://127.0.0.1:5000/'
+    ngrok = 'http://e626-170-0-71-179.ngrok.io'
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Connect")
@@ -139,7 +140,7 @@ class MyThread(QtCore.QThread):
     def run(self):
         while 1:
             resp = ui.getPaciente()
-            time.sleep(3)
+            time.sleep(2)
             self.ard_signal.emit(resp['status'])
 
 
