@@ -20,6 +20,14 @@ def update(cpf: int):
     else:
         return jsonify({'status': 'Pacient not found'}), 404
 
+@app.route('/patient/alert/<int:cpf>', methods=['PUT'])
+def alert(cpf: int):
+    dataUpdate = request.json
+    if dbPatients.sendAlert(cpf, dataUpdate):
+        return jsonify({'status': 'Sucess'}), 200
+    else:
+        return jsonify({'status': 'Pacient not found'}), 404
+
 @app.route('/patient/<int:cpf>', methods=['GET'])
 def get(cpf: int):
     return jsonify(dbPatients.getPatient(cpf)), 200

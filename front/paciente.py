@@ -139,6 +139,7 @@ class Ui_MainWindow(object):
         self.label_nomePaciente.setObjectName("label_nomePaciente")
         self.label_sinaisVitais = QtWidgets.QLabel(self.centralwidget)
         self.label_sinaisVitais.setGeometry(QtCore.QRect(170, 370, 251, 16))
+        self.label_sinaisVitais.setText("")
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)

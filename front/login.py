@@ -79,6 +79,9 @@ class Ui_MainWindow(object):
         self.label_2_nome.setText(_translate("MainWindow", "Nome"))
         self.label.setText(_translate("MainWindow", "Connect Covid"))
 
+    def update(self, signal):
+        self.telaDados.label_sinaisVitais.setText(signal)
+
     def create_json(self) -> dict:
         return {
             'cpf': int(self.lineEdit_CPF.text()),
@@ -87,7 +90,8 @@ class Ui_MainWindow(object):
             'freq': '',
             'pressao1': '',
             'pressao2': '',
-            'resp': ''
+            'resp': '',
+            'status': 'Estável'
         }
 
     def update_json(self) -> dict:
@@ -97,7 +101,7 @@ class Ui_MainWindow(object):
             'freq': self.telaDados.spinBox_freq.value(),
             'pressao1': self.telaDados.spinBox_pressao1.value(),
             'pressao2': self.telaDados.spinBox_pressao1.value(),
-            'resp': self.telaDados.spinBox_saturacao.value()
+            'resp': self.telaDados.spinBox_saturacao.value(),
         }
 
     def login(self):
@@ -108,6 +112,9 @@ class Ui_MainWindow(object):
             self.telaDados.label_nomePaciente.setText(paciente['nome'])
             self.telaDados.show()
             self.telaDados.botao.clicked.connect(self.atualizaPaciente)
+            self.thread_start = MyThread()
+            self.thread_start.ard_signal.connect(self.update)
+            self.thread_start.start()
 
         except:
             print("error")
@@ -117,9 +124,23 @@ class Ui_MainWindow(object):
             url=f'{self.ngrok}/patient/{int(self.lineEdit_CPF.text())}', json=self.update_json())
         print(r)
 
-    def getPaciente(self)->dict:
-        rq = requests.get(url=f'{self.ngrok}/patient/{int(self.lineEdit_CPF.text())}')
+    def getPaciente(self) -> dict:
+        rq = requests.get(
+            url=f'{self.ngrok}/patient/{int(self.lineEdit_CPF.text())}')
         return rq.json()
+
+
+class MyThread(QtCore.QThread):
+    ard_signal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        QtCore.QThread.__init__(self)
+
+    def run(self):
+        while 1:
+            resp = ui.getPaciente()
+            time.sleep(3)
+            self.ard_signal.emit(resp['status'])
 
 
 if __name__ == "__main__":
