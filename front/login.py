@@ -14,7 +14,7 @@ import time
 
 
 class Ui_MainWindow(object):
-    ngrok = 'http://f7d4-170-0-71-179.ngrok.io'
+    ngrok = 'http://127.0.0.1:5000/'
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Connect")
@@ -83,6 +83,11 @@ class Ui_MainWindow(object):
         return {
             'cpf': int(self.lineEdit_CPF.text()),
             'nome': self.lineEdit_NOME.text(),
+            'temp': '',
+            'freq': '',
+            'pressao1': '',
+            'pressao2': '',
+            'resp': ''
         }
 
     def update_json(self) -> dict:

@@ -14,7 +14,8 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 24, 55);</string>
+   <string notr="true">
+background-color: rgb(255, 24, 93);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_titulo">
@@ -44,41 +45,11 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>70</y>
       <width>201</width>
-      <height>331</height>
+      <height>291</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Pacientes:</string>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="background">
-      <brush brushstyle="NoBrush">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="NoBrush">
-       <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
    </widget>
    <widget class="QLabel" name="label_temperatura">
     <property name="geometry">
@@ -88,6 +59,9 @@
       <width>121</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
@@ -249,8 +223,8 @@ background-color: rgb(0, 0, 127);</string>
      <rect>
       <x>250</x>
       <y>320</y>
-      <width>61</width>
-      <height>16</height>
+      <width>71</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -265,21 +239,76 @@ background-color: rgb(0, 0, 127);</string>
 background-color: rgb(0, 0, 127);</string>
     </property>
     <property name="text">
-     <string>Situação</string>
+     <string>Situação:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLabel" name="label_titulo_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>320</y>
-      <width>41</width>
-      <height>16</height>
+      <x>20</x>
+      <y>20</y>
+      <width>201</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(0,0,0);</string>
+    </property>
+    <property name="text">
+     <string>Prioridade de atendimento</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="botaoEstavel">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>320</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 127);</string>
+    </property>
+    <property name="text">
+     <string>Estável</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="botaoEmergencia">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>320</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 127);</string>
+    </property>
+    <property name="text">
+     <string>Emergência</string>
     </property>
    </widget>
   </widget>

@@ -24,6 +24,10 @@ def update(cpf: int):
 def get(cpf: int):
     return jsonify(dbPatients.getPatient(cpf)), 200
 
+@app.route('/patientByName/<string:nome>', methods=['GET'])
+def getByName(nome: str):
+    return jsonify(dbPatients.getPatientByName(nome)), 200
+
 @app.route('/patient', methods=['POST'])
 def criar():
     patient = request.json

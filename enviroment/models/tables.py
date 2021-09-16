@@ -37,6 +37,13 @@ class DataPatient():
             if(p['cpf']==cpf):
                 return p
         return None
+    
+    def getPatientByName(self, nome: str)->dict:
+        table = tables['patients']
+        for p in table:
+            if(p['nome']==nome):
+                return p
+        return None
 
 
 
