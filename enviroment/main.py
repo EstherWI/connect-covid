@@ -1,5 +1,6 @@
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 dbPatients = DataPatient()
@@ -42,4 +43,5 @@ def criar():
     dbPatients.addPatient(patient)
     return jsonify({'status': 'Sucess'}), 200
 
-app.run(debug=True)
+port = int(os.environ.get("PORT", 5000))
+app.run(debug=True ,host='0.0.0.0', port=port)
