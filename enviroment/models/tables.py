@@ -41,6 +41,7 @@ class DataPatient():
             table[index]['pressao1'] = data['pressao1']
             table[index]['pressao2'] = data['pressao2']
             table[index]['resp'] = data['resp']
+            table[index]['status'] = data['status']
             return True
         else:
             return False
