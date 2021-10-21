@@ -13,12 +13,12 @@ class DataPatient():
     def addPatient(self, patient: dict):
         tables['patients'].append(patient)
     
-    def sendAlert(self, cpf: int, data: dict) -> bool:
+    def sendAlert(self, id: int, data: dict) -> bool:
         index = -1
         cont = 0
         table = tables['patients']
         for p in table:
-            if(p['cpf']==cpf):
+            if(p['id']==id):
                 index = cont
             cont = cont+1
         if index!=-1:
@@ -27,12 +27,12 @@ class DataPatient():
         else:
             return False
 
-    def updatePatient(self, cpf: int, data: dict) -> bool:
+    def updatePatient(self, id: int, data: dict) -> bool:
         index = -1
         cont = 0
         table = tables['patients']
         for p in table:
-            if(p['cpf']==cpf):
+            if(p['id']==id):
                 index = cont
             cont = cont+1
         if index!=-1:
@@ -45,10 +45,10 @@ class DataPatient():
         else:
             return False
 
-    def getPatient(self, cpf: int)->dict:
+    def getPatient(self, id: int)->dict:
         table = tables['patients']
         for p in table:
-            if(p['cpf']==cpf):
+            if(p['id']==id):
                 return p
         return None
     

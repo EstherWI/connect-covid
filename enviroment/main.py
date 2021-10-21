@@ -13,25 +13,25 @@ def raiz():
 def getAll():
     return jsonify(dbPatients.getAllPatients()), 200
 
-@app.route('/patient/<int:cpf>', methods=['PUT'])
-def update(cpf: int):
+@app.route('/patient/<int:id>', methods=['PUT'])
+def update(id: int):
     dataUpdate = request.json
-    if dbPatients.updatePatient(cpf, dataUpdate):
+    if dbPatients.updatePatient(id, dataUpdate):
         return jsonify({'status': 'Sucess'}), 200
     else:
         return jsonify({'status': 'Pacient not found'}), 404
 
-@app.route('/patient/alert/<int:cpf>', methods=['PUT'])
-def alert(cpf: int):
+@app.route('/patient/alert/<int:id>', methods=['PUT'])
+def alert(id: int):
     dataUpdate = request.json
-    if dbPatients.sendAlert(cpf, dataUpdate):
+    if dbPatients.sendAlert(id, dataUpdate):
         return jsonify({'status': 'Sucess'}), 200
     else:
         return jsonify({'status': 'Pacient not found'}), 404
 
-@app.route('/patient/<int:cpf>', methods=['GET'])
-def get(cpf: int):
-    return jsonify(dbPatients.getPatient(cpf)), 200
+@app.route('/patient/<int:id>', methods=['GET'])
+def get(id: int):
+    return jsonify(dbPatients.getPatient(id)), 200
 
 @app.route('/patientByName/<string:nome>', methods=['GET'])
 def getByName(nome: str):
