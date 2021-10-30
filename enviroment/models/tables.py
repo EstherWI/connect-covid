@@ -11,7 +11,15 @@ class DataPatient():
         return tables['patients']
 
     def addPatient(self, patient: dict):
-        tables['patients'].append(patient)
+        index = - 1
+        cont = 0
+        for p in tables['patients']:
+            if(p['id']==patient['id']):
+                index = cont
+                break
+            cont = cont+1
+        if index == -1:
+            tables['patients'].append(patient)
     
     def sendAlert(self, id: int, data: dict) -> bool:
         index = -1
