@@ -13,6 +13,12 @@ def raiz():
 def getAll():
     return jsonify(dbPatients.getAllPatients()), 200
 
+@app.route('/patients', methods=['POST'])
+def addPatients():
+    patients = request.json
+    dbPatients.addPatients(patients)
+    return jsonify({'status': 'Sucess'}), 200
+
 @app.route('/patient/<int:id>', methods=['PUT'])
 def update(id: int):
     dataUpdate = request.json

@@ -20,6 +20,9 @@ class DataPatient():
             cont = cont+1
         if index == -1:
             tables['patients'].append(patient)
+
+    def addPatients(self, patients: dict):
+        tables['patients'] = patients
     
     def sendAlert(self, id: int, data: dict) -> bool:
         index = -1
