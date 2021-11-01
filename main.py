@@ -1,3 +1,4 @@
+from heapq import heapify
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
 import json, os, random, paho.mqtt.client
@@ -7,7 +8,10 @@ host = 'broker.hivemq.com'
 port_mqtt = 1883
 port = int(os.environ.get("PORT", 5000))
 topic = "paciente_broker"
+fog1 = []
+fog2 = []
 ordenada = []
+cont = 0
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
@@ -23,7 +27,6 @@ def raiz():
 def getAll(N: int):
     client.publish("N", N)
     return jsonify(getAllPatients(N)), 200
-    #return jsonify({'status': 'Sucess'}), 200
 
 @app.route('/patients', methods=['POST'])
 def addPatients():
@@ -76,14 +79,20 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
+        global fog1, fog2, ordenada
         data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
-        global ordenada 
+        if(data[0]['fog']=="FOG1"):
+            fog1 = data
+        else:
+            fog2 = data
+
+        ordenada = fog1 + fog2
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
-        print(ordenada) 
     client.subscribe(topic)
     client.on_message = on_message
 
 def getAllPatients(N: int)->list:
+    print(ordenada)
     return ordenada[0:N]
 
 if __name__ == '__main__':
