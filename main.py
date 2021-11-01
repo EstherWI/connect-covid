@@ -23,8 +23,8 @@ def raiz():
 @app.route('/get/patients/<int:N>', methods=['GET'])
 def getAll(N: int):
     client.publish("N", N)
-    #return jsonify(getAllPatients(N)), 200
-    return jsonify({'status': 'Sucess'}), 200
+    return jsonify(getAllPatients(N)), 200
+    #return jsonify({'status': 'Sucess'}), 200
 
 @app.route('/patients', methods=['POST'])
 def addPatients():
