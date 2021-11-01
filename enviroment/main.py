@@ -1,6 +1,18 @@
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
-import os
+import json
+import random
+import requests
+import paho.mqtt.client
+
+
+host = 'broker.hivemq.com'
+port = 1883
+topic = "paciente_broker"
+ordenada = []
+
+# generate client ID with pub prefix randomly
+client_id = f'python-mqtt-{random.randint(0, 100)}'
 
 app = Flask(__name__)
 dbPatients = DataPatient()
@@ -9,9 +21,11 @@ dbPatients = DataPatient()
 def raiz():
     return jsonify({'status': 'Sucess'}), 200
 
-@app.route('/patients/<int:N>', methods=['GET'])
-def getAll():
-    return jsonify(dbPatients.getAllPatients()), 200
+@app.route('/get/patients/<int:N>', methods=['GET'])
+def getAll(N: int):
+    client.publish("N", N)
+    #return jsonify(getAllPatients(N)), 200
+    return jsonify({'status': 'Sucess'}), 200
 
 @app.route('/patients', methods=['POST'])
 def addPatients():
@@ -49,5 +63,35 @@ def criar():
     dbPatients.addPatient(patient)
     return jsonify({'status': 'Sucess'}), 200
 
-port = int(os.environ.get("PORT", 5000))
-app.run(debug=True ,host='0.0.0.0', port=port)
+def connect_mqtt() -> paho.mqtt.client:
+    def on_connect(client, userdata, flags, rc):
+        if rc == 0:
+            print("Connected to MQTT Broker!")
+        else:
+            print("Failed to connect, return code %d\n", rc)
+
+    client = paho.mqtt.client.Client(client_id)
+    client.on_connect = on_connect
+    client.connect(host, port)
+    return client
+
+
+def subscribe(client: paho.mqtt.client):
+    def on_message(client, userdata, msg):
+        data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
+        global ordenada 
+        ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
+        print(ordenada) 
+    client.subscribe(topic)
+    client.on_message = on_message
+
+def getAllPatients(N: int)->list:
+    return ordenada[0:N]
+
+if __name__ == '__main__':
+    client = connect_mqtt()
+    subscribe(client)
+    client.loop_start()
+    app.run(debug=True ,host='0.0.0.0', port=port)
+
+

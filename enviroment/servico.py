@@ -7,6 +7,7 @@ import paho.mqtt.client
 host = 'broker.hivemq.com'
 port = 1883
 topic = "paciente_broker"
+ordenada = []
 
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
@@ -28,7 +29,9 @@ def connect_mqtt() -> paho.mqtt.client:
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
         data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
-        ordenada = sorted(data, key=lambda k: k['status'], reverse=True) 
+        global ordenada 
+        ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
+        print("servico") 
         #requests.post(url=f'https://connect-covid.herokuapp.com/patients', json=ordenada)
     client.subscribe(topic)
     client.on_message = on_message
