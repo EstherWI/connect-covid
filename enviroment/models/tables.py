@@ -1,3 +1,4 @@
+import servico
 tables = {
     'patients': [
 
@@ -7,8 +8,8 @@ tables = {
 
 class DataPatient():
 
-    def getAllPatients(self)->dict:
-        return tables['patients']
+    def getAllPatients(self, N: int)->dict:
+        return servico.ordenada
 
     def addPatient(self, patient: dict):
         index = - 1

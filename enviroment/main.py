@@ -9,7 +9,7 @@ dbPatients = DataPatient()
 def raiz():
     return jsonify({'status': 'Sucess'}), 200
 
-@app.route('/patients', methods=['GET'])
+@app.route('/patients/<int:N>', methods=['GET'])
 def getAll():
     return jsonify(dbPatients.getAllPatients()), 200
 
