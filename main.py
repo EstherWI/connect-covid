@@ -79,14 +79,17 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
-        global fog1, fog2, ordenada
+        global fog1
+        global fog2
+        global ordenada
         data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
         if(data[0]['fog']=="FOG1"):
             fog1 = data
         else:
             fog2 = data
 
-        ordenada = fog1 + fog2
+        data = fog1 + fog2
+        print(ordenada)
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
     client.subscribe(topic)
     client.on_message = on_message
