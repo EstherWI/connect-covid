@@ -2,7 +2,6 @@ from models.tables import DataPatient
 from flask import Flask, request, jsonify
 import json
 import random
-import requests
 import paho.mqtt.client
 
 
