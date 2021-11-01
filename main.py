@@ -1,12 +1,11 @@
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
-import json
-import random
-import paho.mqtt.client
+import json, os, random, paho.mqtt.client
 
 
 host = 'broker.hivemq.com'
-port = 1883
+port_mqtt = 1883
+port = int(os.environ.get("PORT", 5000))
 topic = "paciente_broker"
 ordenada = []
 
@@ -71,7 +70,7 @@ def connect_mqtt() -> paho.mqtt.client:
 
     client = paho.mqtt.client.Client(client_id)
     client.on_connect = on_connect
-    client.connect(host, port)
+    client.connect(host, port_mqtt)
     return client
 
 
