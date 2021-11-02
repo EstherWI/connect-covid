@@ -11,6 +11,7 @@ topic = "paciente_broker"
 fog1 = []
 fog2 = []
 ordenada = []
+paciente = None
 cont = 0
 
 # generate client ID with pub prefix randomly
@@ -27,6 +28,11 @@ def raiz():
 def getAll(N: int):
     client.publish("N", N)
     return jsonify(getAllPatients(N)), 200
+
+@app.route('/get/patient/<str:nome>', methods=['GET'])
+def getPatient(nome: str):
+    client.publish("PacienteSelect", nome)
+    return jsonify(getPatientByName()), 200
 
 @app.route('/patients', methods=['POST'])
 def addPatients():
@@ -77,7 +83,7 @@ def connect_mqtt() -> paho.mqtt.client:
     return client
 
 
-def subscribe(client: paho.mqtt.client):
+def subscribe(client: paho.mqtt.client, client2: paho.mqtt.client):
     def on_message(client, userdata, msg):
         global fog1
         global fog2
@@ -90,16 +96,24 @@ def subscribe(client: paho.mqtt.client):
 
         data = fog1 + fog2
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
+    def on_message_Monitoramento(client, userdata, msg):
+        global paciente
+        paciente = json.loads(str(msg.payload.decode("utf-8")))
     client.subscribe(topic)
     client.on_message = on_message
+    client2.subscribe("UpMonitora")
+    client2.on_message = on_message_Monitoramento
 
 def getAllPatients(N: int)->list:
-    print(ordenada)
     return ordenada[0:N]
+
+def getPatientByName()->dict:
+    return paciente
 
 if __name__ == '__main__':
     client = connect_mqtt()
-    subscribe(client)
+    client2 = connect_mqtt()
+    subscribe(client, client2)
     client.loop_start()
     app.run(debug=True ,host='0.0.0.0', port=port)
 
