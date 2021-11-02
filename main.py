@@ -29,7 +29,7 @@ def getAll(N: int):
     client.publish("N", N)
     return jsonify(getAllPatients(N)), 200
 
-@app.route('/get/patient/<str:nome>', methods=['GET'])
+@app.route('/get/patient/<string:nome>', methods=['GET'])
 def getPatient(nome: str):
     client.publish("PacienteSelect", nome)
     return jsonify(getPatientByName()), 200
