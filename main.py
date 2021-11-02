@@ -96,7 +96,7 @@ def subscribe(client: paho.mqtt.client):
         #     fog2 = data
         # data = fog1 + fog2
         # ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
-    client.subscribe([(topic), ("MonitorarPaciente")])
+    client.subscribe([(topic, 1), ("MonitorarPaciente", 1)])
     client.on_message = on_message
 
 def getAllPatients(N: int)->list:
