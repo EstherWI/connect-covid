@@ -89,7 +89,6 @@ def subscribe(client: paho.mqtt.client):
             fog2 = data
 
         data = fog1 + fog2
-        print(ordenada)
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
     client.subscribe(topic)
     client.on_message = on_message
