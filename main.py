@@ -85,23 +85,19 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
-        global fog1
-        global fog2
-        global ordenada
-        data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
-        if(data[0]['fog']=="FOG1"):
-            fog1 = data
-        else:
-            fog2 = data
-        data = fog1 + fog2
-        ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
-    def on_message_MonitorarPaciente(client, userdata, msg):
-        global paciente
-        paciente = json.loads(str(msg.payload.decode("utf-8")))
-    client.subscribe(topic)
+        print(str(msg.payload.decode("utf-8")))
+        # global fog1
+        # global fog2
+        # global ordenada
+        # data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
+        # if(data[0]['fog']=="FOG1"):
+        #     fog1 = data
+        # else:
+        #     fog2 = data
+        # data = fog1 + fog2
+        # ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
+    client.subscribe([(topic), ("MonitorarPaciente")])
     client.on_message = on_message
-    client.subscribe("MonitorarPaciente")
-    client.on_message = on_message_MonitorarPaciente
 
 def getAllPatients(N: int)->list:
     return ordenada[0:N]
