@@ -83,7 +83,7 @@ def connect_mqtt() -> paho.mqtt.client:
     return client
 
 
-def subscribe(client: paho.mqtt.client, client2: paho.mqtt.client):
+def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
         global fog1
         global fog2
@@ -93,7 +93,6 @@ def subscribe(client: paho.mqtt.client, client2: paho.mqtt.client):
             fog1 = data
         else:
             fog2 = data
-
         data = fog1 + fog2
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
     client.subscribe(topic)
