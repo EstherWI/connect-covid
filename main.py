@@ -107,6 +107,7 @@ def getPatientByName()->dict:
 if __name__ == '__main__':
     client = connect_mqtt()
     subscribe(client)
+    client.loop_start()
     app.run(debug=True ,host='0.0.0.0', port=port)
 
 
