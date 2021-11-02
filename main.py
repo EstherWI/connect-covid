@@ -96,13 +96,8 @@ def subscribe(client: paho.mqtt.client, client2: paho.mqtt.client):
 
         data = fog1 + fog2
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
-    def on_message_Monitoramento(client, userdata, msg):
-        global paciente
-        paciente = json.loads(str(msg.payload.decode("utf-8")))
     client.subscribe(topic)
     client.on_message = on_message
-    client2.subscribe("UpMonitora")
-    client2.on_message = on_message_Monitoramento
 
 def getAllPatients(N: int)->list:
     return ordenada[0:N]
@@ -112,10 +107,7 @@ def getPatientByName()->dict:
 
 if __name__ == '__main__':
     client = connect_mqtt()
-    client2 = connect_mqtt()
-    subscribe(client, client2)
-    client.loop_start()
-    client2.loop_start()
+    subscribe(client)
     app.run(debug=True ,host='0.0.0.0', port=port)
 
 
