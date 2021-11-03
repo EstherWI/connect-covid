@@ -45,7 +45,6 @@ def get(id: int):
 
 @app.route('/getId', methods=['GET'])
 def getId():
-    dbPatients.updateId(id)
     return jsonify(getId()), 200
 
 @app.route('/getN', methods=['GET'])
