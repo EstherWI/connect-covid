@@ -93,8 +93,6 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
-        if(msg.topic == "PacienteSelect"):
-            print("Monitoramento")
         global fog1
         global fog2
         global ordenada
@@ -105,7 +103,7 @@ def subscribe(client: paho.mqtt.client):
             fog2 = data
         data = fog1 + fog2
         ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
-    client.subscribe([(topic, 1), ("PacienteSelect", 1)])
+    client.subscribe([(topic, 1), ("MonitorarPaciente", 1)])
     client.on_message = on_message
 
 def getAllPatients(N: int)->list:
