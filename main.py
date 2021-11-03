@@ -1,7 +1,7 @@
 from heapq import heapify
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
-import json, os, random, paho.mqtt.client
+import json, os, random, paho.mqtt.client, names
 
 
 host = 'broker.hivemq.com'
@@ -85,17 +85,16 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
-        print(str(msg.payload.decode("utf-8")))
-        # global fog1
-        # global fog2
-        # global ordenada
-        # data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
-        # if(data[0]['fog']=="FOG1"):
-        #     fog1 = data
-        # else:
-        #     fog2 = data
-        # data = fog1 + fog2
-        # ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
+        global fog1
+        global fog2
+        global ordenada
+        data = eval(json.loads(json.dumps(str(msg.payload.decode("utf-8")))))
+        if(data[0]['fog']=="FOG1"):
+            fog1 = data
+        else:
+            fog2 = data
+        data = fog1 + fog2
+        ordenada = sorted(data, key=lambda k: k['status'], reverse=True)
     client.subscribe([(topic, 1), ("MonitorarPaciente", 1)])
     client.on_message = on_message
 
@@ -107,6 +106,16 @@ def getPatientByName()->dict:
 
 if __name__ == '__main__':
     client = connect_mqtt()
+    data = {
+        "nome": names.get_full_name(),
+        "saturacao":random.randint(96, 100),
+        "temp":round(random.uniform(35.5, 37.4), 1),
+        "freq":random.randint(60,99),
+        "pressao1":random.randint(110,130),
+        "pressao2":random.randint(70,84),
+        "status":0,
+    }
+    client.publish("MonitorarPaciente", str(data))
     subscribe(client)
     client.loop_start()
     app.run(debug=True ,host='0.0.0.0', port=port)
