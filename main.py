@@ -45,11 +45,11 @@ def get(id: int):
 
 @app.route('/getId', methods=['GET'])
 def getId():
-    return jsonify(getId()), 200
+    return jsonify(dbPatients.getId()), 200
 
 @app.route('/getN', methods=['GET'])
 def getN():
-    return jsonify(getN()), 200
+    return jsonify(dbPatients.getN()), 200
 
 
 def connect_mqtt() -> paho.mqtt.client:
