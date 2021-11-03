@@ -29,10 +29,10 @@ def getAll(N: int):
     client.publish("N", N)
     return jsonify(getAllPatients(N)), 200
 
-@app.route('/get/patient/<string:nome>', methods=['GET'])
-def getPatient(nome: str):
-    client.publish("PacienteSelect", nome)
-    return jsonify(getPatientByName()), 200
+@app.route('/patient/<int:id>', methods=['GET'])
+def get(id: int):
+    client.publish("PacienteSelect", id)
+    return jsonify(getPatient(id)), 200
 
 @app.route('/patients', methods=['POST'])
 def addPatients():
@@ -55,10 +55,6 @@ def alert(id: int):
         return jsonify({'status': 'Sucess'}), 200
     else:
         return jsonify({'status': 'Pacient not found'}), 404
-
-@app.route('/patient/<int:id>', methods=['GET'])
-def get(id: int):
-    return jsonify(dbPatients.getPatient(id)), 200
 
 @app.route('/patientByName/<string:nome>', methods=['GET'])
 def getByName(nome: str):
@@ -85,7 +81,8 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
-        print(msg.topic)
+        if(msg.topic == "MonitorarPaciente"):
+            print("Monitoramento")
         global fog1
         global fog2
         global ordenada
@@ -102,7 +99,7 @@ def subscribe(client: paho.mqtt.client):
 def getAllPatients(N: int)->list:
     return ordenada[0:N]
 
-def getPatientByName()->dict:
+def getPatient()->dict:
     return paciente
 
 if __name__ == '__main__':
