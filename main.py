@@ -1,7 +1,7 @@
 from heapq import heapify
 from models.tables import DataPatient
 from flask import Flask, request, jsonify
-import json, os, random, paho.mqtt.client, names
+import json, os, random, paho.mqtt.client
 
 
 host = 'broker.hivemq.com'
@@ -107,7 +107,7 @@ def getPatientByName()->dict:
 if __name__ == '__main__':
     client = connect_mqtt()
     data = {
-        "nome": names.get_full_name(),
+        "nome": "Gustavo Alves",
         "saturacao":random.randint(96, 100),
         "temp":round(random.uniform(35.5, 37.4), 1),
         "freq":random.randint(60,99),
