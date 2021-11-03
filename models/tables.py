@@ -4,6 +4,9 @@ tables = {
     ]
 }
 
+n = 10
+id = "0"
+
 
 class DataPatient():
 
@@ -21,6 +24,20 @@ class DataPatient():
 
     def addPatients(self, patients: dict):
         tables['patients'] = patients
+    
+    def updateN(self, N:int):
+        global n
+        n = N
+
+    def updateId(self, ID:int):
+        global id
+        id = ID
+
+    def getN(self)->int:
+        return n
+
+    def getId(self)->int:
+        return id
     
     def sendAlert(self, id: int, data: dict) -> bool:
         index = -1

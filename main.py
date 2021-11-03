@@ -35,51 +35,23 @@ def raiz():
 
 @app.route('/get/patients/<int:N>', methods=['GET'])
 def getAll(N: int):
-    result = client.publish("N", N)
-    status = result[0]
-    if status != 0:
-        print(f"Failed to send message to topic PacienteSelect")
+    dbPatients.updateN(N)
     return jsonify(getAllPatients(N)), 200
 
 @app.route('/patient/<int:id>', methods=['GET'])
 def get(id: int):
-    result = client.publish("PacienteSelect", id)
-    status = result[0]
-    if status != 0:
-        print(f"Failed to send message to topic PacienteSelect")
+    dbPatients.updateId(id)
     return jsonify(getPatient()), 200
 
-@app.route('/patients', methods=['POST'])
-def addPatients():
-    patients = request.json
-    dbPatients.addPatients(patients)
-    return jsonify({'status': 'Sucess'}), 200
+@app.route('/getId', methods=['GET'])
+def getId():
+    dbPatients.updateId(id)
+    return jsonify(getId), 200
 
-@app.route('/patient/<int:id>', methods=['PUT'])
-def update(id: int):
-    dataUpdate = request.json
-    if dbPatients.updatePatient(id, dataUpdate):
-        return jsonify({'status': 'Sucess'}), 200
-    else:
-        return jsonify({'status': 'Pacient not found'}), 404
+@app.route('/getN', methods=['GET'])
+def getN():
+    return jsonify(getN()), 200
 
-@app.route('/patient/alert/<int:id>', methods=['PUT'])
-def alert(id: int):
-    dataUpdate = request.json
-    if dbPatients.sendAlert(id, dataUpdate):
-        return jsonify({'status': 'Sucess'}), 200
-    else:
-        return jsonify({'status': 'Pacient not found'}), 404
-
-@app.route('/patientByName/<string:nome>', methods=['GET'])
-def getByName(nome: str):
-    return jsonify(dbPatients.getPatientByName(nome)), 200
-
-@app.route('/patient', methods=['POST'])
-def criar():
-    patient = request.json
-    dbPatients.addPatient(patient)
-    return jsonify({'status': 'Sucess'}), 200
 
 def connect_mqtt() -> paho.mqtt.client:
     def on_connect(client, userdata, flags, rc):
