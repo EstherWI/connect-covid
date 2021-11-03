@@ -40,7 +40,10 @@ def getAll(N: int):
 
 @app.route('/patient/<int:id>', methods=['GET'])
 def get(id: int):
-    client.publish("PacienteSelect", id)
+    result = client.publish("PacienteSelect", id)
+    status = result[0]
+    if status != 0:
+        print(f"Failed to send message to topic PacienteSelect")
     return jsonify(getPatient()), 200
 
 @app.route('/patients', methods=['POST'])
