@@ -35,7 +35,10 @@ def raiz():
 
 @app.route('/get/patients/<int:N>', methods=['GET'])
 def getAll(N: int):
-    client.publish("N", N)
+    result = client.publish("N", N)
+    status = result[0]
+    if status != 0:
+        print(f"Failed to send message to topic PacienteSelect")
     return jsonify(getAllPatients(N)), 200
 
 @app.route('/patient/<int:id>', methods=['GET'])
