@@ -85,6 +85,7 @@ def connect_mqtt() -> paho.mqtt.client:
 
 def subscribe(client: paho.mqtt.client):
     def on_message(client, userdata, msg):
+        print(msg.topic)
         global fog1
         global fog2
         global ordenada
